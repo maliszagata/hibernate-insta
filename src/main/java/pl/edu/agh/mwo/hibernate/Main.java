@@ -1,6 +1,7 @@
 package pl.edu.agh.mwo.hibernate;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class Main {
 
@@ -9,10 +10,17 @@ public class Main {
 	public static void main(String[] args) {
 		Main main = new Main();
 		
-		// tu wstaw kod aplikacji
+		User user1 = new User();
+		main.aaa(user1);
 		
 		main.close();
 	}
+
+private void aaa(User user) {
+	Transaction transaction = session.beginTransaction();
+	session.save(user);
+	transaction.commit();
+}
 
 	public Main() {
 		session = HibernateUtil.getSessionFactory().openSession();
