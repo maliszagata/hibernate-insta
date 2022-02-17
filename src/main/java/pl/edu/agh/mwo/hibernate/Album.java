@@ -1,7 +1,6 @@
 package pl.edu.agh.mwo.hibernate;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 

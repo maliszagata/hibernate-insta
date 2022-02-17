@@ -1,81 +1,38 @@
 package pl.edu.agh.mwo.hibernate;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 public class Main {
 
     Session session;
 
     public static void main(String[] args) {
-        Main main = new Main();
+        InstaQueries instaQueries = new InstaQueries();
 
-        main.createSomeUsers();
+//        createSomeUsers(instaQueries);
+//
+//        instaQueries.addLike(1, 7);
+//        instaQueries.addLike(1, 8);
+//        instaQueries.addLike(1, 10);
+//        instaQueries.addLike(2, 4);
+//        instaQueries.addLike(2, 10);
+//        instaQueries.addLike(3, 1);
+//        instaQueries.addLike(3, 7);
+//        instaQueries.addLike(3, 8);
+//
+//        instaQueries.dislike(1, 8);
+//
+        instaQueries.deleteUser(1);
+//        instaQueries.deletePhoto(10);
+//        instaQueries.deleteUser(3);
+//        instaQueries.deleteAlbum(3);
+//        instaQueries.deletePhoto(8);
 
-        main.addLike(1, 7);
-
-//        main.deleteUser(1);
-//        main.deleteUser(2);
-//        main.deleteAlbum(3);
-//        main.deletePhoto(8);
-
-        main.close();
+        instaQueries.close();
     }
 
-    private void addLike(long userId, long photoId) {
-        String userHql = "FROM User u WHERE u.id=" + userId;
-        Query<User> userQuery = session.createQuery(userHql, User.class);
-        User user = userQuery.uniqueResult();
 
-        String photoHql = "FROM Photo p WHERE p.id=" + photoId;
-        Query<Photo> photoQuery = session.createQuery(photoHql, Photo.class);
-        Photo photo = photoQuery.uniqueResult();
-
-        user.likePhoto(photo);
-
-        Transaction transaction = session.beginTransaction();
-        session.save(user);
-        transaction.commit();
-    }
-
-    private void saveUser(User user) {
-        Transaction transaction = session.beginTransaction();
-        session.save(user);
-        transaction.commit();
-    }
-
-    private void deleteUser(long userId) {
-        String hql = "FROM User u WHERE u.id=" + userId;
-        Query<User> query = session.createQuery(hql, User.class);
-        User user = query.uniqueResult();
-
-        Transaction deleteTransaction = session.beginTransaction();
-        session.delete(user);
-        deleteTransaction.commit();
-    }
-
-    private void deleteAlbum(long albumId) {
-        String hql = "FROM Album u WHERE u.id=" + albumId;
-        Query<Album> query = session.createQuery(hql, Album.class);
-        Album album = query.uniqueResult();
-
-        Transaction deleteTransaction = session.beginTransaction();
-        session.delete(album);
-        deleteTransaction.commit();
-    }
-
-    private void deletePhoto(long photoId) {
-        String hql = "FROM Photo u WHERE u.id=" + photoId;
-        Query<Photo> query = session.createQuery(hql, Photo.class);
-        Photo photo = query.uniqueResult();
-
-        Transaction deleteTransaction = session.beginTransaction();
-        session.delete(photo);
-        deleteTransaction.commit();
-    }
-
-    private void createSomeUsers() {
+    private static void createSomeUsers(InstaQueries instaQueries) {
         //        User1
         User user1 = new User();
         user1.setName("instaUser");
@@ -107,7 +64,7 @@ public class Main {
         album2.addPhoto(photo4);
         user1.addAlbum(album2);
 
-        this.saveUser(user1);
+        instaQueries.saveUser(user1);
 
         //        User2
         User user2 = new User();
@@ -140,15 +97,25 @@ public class Main {
         album4.addPhoto(photo8);
         user2.addAlbum(album4);
 
-        this.saveUser(user2);
-    }
+        instaQueries.saveUser(user2);
 
-    public Main() {
-        session = HibernateUtil.getSessionFactory().openSession();
-    }
+        //        User3
+        User user3 = new User();
+        user3.setName("influencer");
 
-    public void close() {
-        session.close();
-        HibernateUtil.shutdown();
+        Album album5 = new Album();
+        album5.setName("Polecam");
+        album5.setDescription("To są moje fotki rzeczy, które polecam.");
+        user3.addAlbum(album5);
+
+        Photo photo9 = new Photo();
+        photo9.setName("Mój ulubiony kosmetyk");
+        album5.addPhoto(photo9);
+
+        Photo photo10 = new Photo();
+        photo10.setName("Ulubiona restauracja");
+        album5.addPhoto(photo10);
+
+        instaQueries.saveUser(user3);
     }
 }

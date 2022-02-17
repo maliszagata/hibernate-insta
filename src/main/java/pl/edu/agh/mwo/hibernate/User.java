@@ -21,13 +21,7 @@ public class User {
 
     @Column
     private String name;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "photos_users",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "photo_id")
-    )
+    @ManyToMany(mappedBy = "likingUsers")
     private Set<Photo> likedPhotos = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -53,6 +47,10 @@ public class User {
     public void likePhoto(Photo photo) {
         likedPhotos.add(photo);
         photo.addLikingUser(this);
+    }
+
+    public void dislikePhoto(Photo photo) {
+        likedPhotos.remove(photo);
     }
 
 }
