@@ -12,13 +12,34 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column
+    private String name;
+
+    @Column
+    private long albumId;
+
+    @Column(name = "user_id")
+    private long idUserOwner;
+
+    public Set<User> getLikingUsers() {
+        return likingUsers;
+    }
+
+    public void setAlbumId(long albumId) {
+        this.albumId = albumId;
+    }
+
+    public long getAlbumId() {
+        return albumId;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    @Column
-    private String name;
+    public String getName() {
+        return name;
+    }
 
     @ManyToMany
     @JoinTable(name = "photos_users",

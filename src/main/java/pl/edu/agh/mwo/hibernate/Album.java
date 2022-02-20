@@ -18,12 +18,16 @@ public class Album {
     @Column
     private String description;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name = "user_id")
+    private long idUserOwner;
+
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setDescription(String description) {
@@ -34,12 +38,20 @@ public class Album {
         return description;
     }
 
+    public void setIdUserOwner(long idUserOwner) {
+        this.idUserOwner = idUserOwner;
+    }
+
+    public long getIdUserOwner() {
+        return idUserOwner;
+    }
+
     public Set<Photo> getPhotos() {
         return photos;
     }
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "album_id")
+    @JoinColumn(name = "albumId")
     private Set<Photo> photos = new HashSet<>();
 
     public void addPhoto(Photo photo) {
