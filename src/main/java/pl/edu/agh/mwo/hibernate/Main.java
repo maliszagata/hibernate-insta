@@ -7,12 +7,13 @@ public class Main {
     public static void main(String[] args) {
         InstaQueries instaQueries = new InstaQueries();
 
-//        createSomeUsers(instaQueries);
+        createSomeUsers(instaQueries);
 
-//        instaQueries.makeFriend(2,3);
+        instaQueries.makeFriend(2, 3);
 //        instaQueries.makeFriend(1,3);
-//
+
         instaQueries.addLike(2, 9);
+        instaQueries.addLike(2, 10);
         instaQueries.addLike(2, 1);
         instaQueries.addLike(1, 10);
 //        instaQueries.addLike(1, 10);
@@ -22,9 +23,9 @@ public class Main {
 //        instaQueries.addLike(3, 7);
 //        instaQueries.addLike(3, 8);
 //
-//        instaQueries.dislike(1, 8);
+        instaQueries.dislike(2, 9);
 //
-//        instaQueries.deleteUser(1);
+//        instaQueries.deleteUser(2);
 //        instaQueries.deletePhoto(10);
 //        instaQueries.deleteUser(3);
 //        instaQueries.deleteAlbum(3);
